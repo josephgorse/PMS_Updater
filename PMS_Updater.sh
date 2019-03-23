@@ -6,15 +6,15 @@ DOWNLOADPATH="/tmp"
 LOGPATH="/tmp"
 LOGFILE="PMS_Updater.log"
 PMSPARENTPATH="/usr/local/share"
-PMSLIVEFOLDER="plexmediaserver-plexpass"
-PMSBAKFOLDER="plexmediaserver-plexpass.bak"
+PMSLIVEFOLDER="plexmediaservers"
+PMSBAKFOLDER="plexmediaserver.bak"
 CERTFILE="/usr/local/share/certs/ca-root-nss.crt"
 AUTOUPDATE=0
 FORCEUPDATE=0
-VERBOSE=0
+VERBOSE=1
 REMOVE=0
 LOGGING=1
-PLEXPASS=1
+PLEXPASS=0
 
 # Initialize CURRENTVER to the script max so if reading the current version fails
 # for some reason we don't blindly clobber things
@@ -191,7 +191,7 @@ applyUpdate()
     rm -rf $PMSPARENTPATH/$PMSBAKFOLDER 2>&1 | LogMsg
     echo Done. | LogMsg -f
     echo Stopping Plex Media Server .....| LogMsg -n
-    service plexmediaserver_plexpass stop 2>&1
+    service plexmediaserver stop 2>&1
     echo Done. | LogMsg -f
     echo Moving current Plex Media Server to backup location .....| LogMsg -n
     mv $PMSPARENTPATH/$PMSLIVEFOLDER/ $PMSPARENTPATH/$PMSBAKFOLDER/ 2>&1 | LogMsg
@@ -209,7 +209,7 @@ applyUpdate()
     ln -s $PMSPARENTPATH/$PMSLIVEFOLDER/Plex\ Media\ Server $PMSPARENTPATH/$PMSLIVEFOLDER/Plex_Media_Server 2>&1 | LogMsg
     ln -s $PMSPARENTPATH/$PMSLIVEFOLDER/libpython2.7.so.1 $PMSPARENTPATH/$PMSLIVEFOLDER/libpython2.7.so 2>&1 | LogMsg
     echo Starting Plex Media Server .....| LogMsg -n
-    service plexmediaserver_plexpass start
+    service plexmediaserver start
     echo Done. | LogMsg -f
 }
 
